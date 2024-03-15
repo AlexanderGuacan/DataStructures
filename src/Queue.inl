@@ -13,7 +13,7 @@ inline Queue<T>::Queue(const Queue& queue) {
 
     while (iterator != nullptr) {
         enqueue(iterator->data);
-        iterator = iterator->nextAdjacentNode;
+        iterator = iterator->nextNode;
     }
 }
 
@@ -34,7 +34,7 @@ inline void Queue<T>::enqueue(const T& element) {
     if (isEmpty()) {
         front = node;
     } else {
-        back->nextAdjacentNode = node;
+        back->nextNode = node;
     }
 
     back = node;
@@ -49,7 +49,7 @@ inline T Queue<T>::dequeue() {
     T dequeueElement = front->data;
     Node<T>* dequeueNode = front;
 
-    front = front->nextAdjacentNode;
+    front = front->nextNode;
 
     delete dequeueNode;
     dequeueNode = nullptr;

@@ -5,8 +5,8 @@
 
 template <typename T>
 struct Node {
-    Node* previousAdjacentNode{};
-    Node* nextAdjacentNode{};
+    Node* previousNode{};
+    Node* nextNode{};
     T data{};
     
     Node(const T& initialData);
