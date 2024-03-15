@@ -3,8 +3,8 @@
 #ifndef QUEUE_HPP
 #define QUEUE_HPP
 
-#include "UnidirectionalNode.hpp"
-#include "UnidirectionalIterator.hpp"
+#include "Node.hpp"
+#include "Iterator.hpp"
 #include <initializer_list>
 
 template <typename T>
@@ -12,8 +12,8 @@ class Queue {
     private:
 
     int length{};
-    UnidirectionalNode<T>* front{};
-    UnidirectionalNode<T>* back{};
+    Node<T>* front{};
+    Node<T>* back{};
 
     public:
 

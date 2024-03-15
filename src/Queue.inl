@@ -9,11 +9,11 @@ inline Queue<T>::Queue(std::initializer_list<T> list) {
 
 template<typename T>
 inline Queue<T>::Queue(const Queue& queue) {
-    const UnidirectionalNode<T>* iterator{ queue.front };
+    const Node<T>* iterator{ queue.front };
 
     while (iterator != nullptr) {
         enqueue(iterator->data);
-        iterator = iterator->adjacentNode;
+        iterator = iterator->nextAdjacentNode;
     }
 }
 
@@ -29,12 +29,12 @@ inline const T& Queue<T>::getFront() const {
 
 template<typename T>
 inline void Queue<T>::enqueue(const T& element) {
-    UnidirectionalNode<T>* node{ new UnidirectionalNode{ element } };
+    Node<T>* node{ new Node{ element } };
 
     if (isEmpty()) {
         front = node;
     } else {
-        back->adjacentNode = node;
+        back->nextAdjacentNode = node;
     }
 
     back = node;
@@ -47,9 +47,9 @@ inline T Queue<T>::dequeue() {
         throw "Empty collection exception";
 
     T dequeueElement = front->data;
-    UnidirectionalNode<T>* dequeueNode = front;
+    Node<T>* dequeueNode = front;
 
-    front = front->adjacentNode;
+    front = front->nextAdjacentNode;
 
     delete dequeueNode;
     dequeueNode = nullptr;
