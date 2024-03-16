@@ -1,0 +1,70 @@
+#include "Stack.hpp"
+
+template<typename T>
+inline Stack<T>::Stack(std::initializer_list<T> list) {
+    for (auto iterator{list.end() - 1}; iterator != list.begin() - 1; --iterator)
+        push(*iterator);
+}
+
+template<typename T>
+inline Stack<T>::Stack(const Stack& stack) {
+    Node<T>* iterator{ stack.top };
+    Stack<T> reverseList{};
+
+    while (iterator != nullptr) {
+        reverseList.push(iterator->element);
+        iterator = iterator->previousNode;
+    }
+
+    while (!reverseList.isEmpty())
+        push(reverseList.pop());
+}
+
+template<typename T>
+inline int Stack<T>::getLength() const {
+    return length;
+}
+
+template<typename T>
+inline const T& Stack<T>::getTop() const {
+    return top->element;
+}
+
+template<typename T>
+inline void Stack<T>::push(const T& element) {
+    Node<T>* node{ new Node{ element } };
+
+    if (!isEmpty())
+        node->previousNode = top;
+
+    top = node;
+    ++length;
+}
+
+template<typename T>
+inline T Stack<T>::pop() {
+    if (isEmpty())
+        throw "Empty collection exception";
+
+    T elementPopped = top->element;
+    Node<T>* nodePopped = top;
+
+    top = top->previousNode;
+    --length;
+
+    delete nodePopped;
+    nodePopped = nullptr;
+
+    return elementPopped;
+}
+
+template<typename T>
+inline bool Stack<T>::isEmpty() const {
+    return !length;
+}
+
+template<typename T>
+inline Stack<T>::~Stack() {
+    while (!isEmpty())
+        pop();
+}
