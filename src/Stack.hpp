@@ -13,6 +13,8 @@ class Stack {
     int length{};
     Node<T>* top{};
 
+    void copy(const Stack& stack);
+
     public:
 
     Stack(std::initializer_list<T> list);
@@ -22,6 +24,8 @@ class Stack {
     void push(const T& element);
     T pop();
     bool isEmpty() const;
+    void clear();
+    Stack& operator=(const Stack& rightHandSideOperator);
     ~Stack();
 };
 

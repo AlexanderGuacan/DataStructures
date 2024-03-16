@@ -1,13 +1,7 @@
 #include "Stack.hpp"
 
 template<typename T>
-inline Stack<T>::Stack(std::initializer_list<T> list) {
-    for (auto iterator{list.end() - 1}; iterator != list.begin() - 1; --iterator)
-        push(*iterator);
-}
-
-template<typename T>
-inline Stack<T>::Stack(const Stack& stack) {
+inline void Stack<T>::copy(const Stack& stack) {
     Node<T>* iterator{ stack.top };
     Stack<T> reverseList{};
 
@@ -18,6 +12,17 @@ inline Stack<T>::Stack(const Stack& stack) {
 
     while (!reverseList.isEmpty())
         push(reverseList.pop());
+}
+
+template<typename T>
+inline Stack<T>::Stack(std::initializer_list<T> list) {
+    for (auto iterator{ list.end() - 1 }; iterator != list.begin() - 1; --iterator)
+        push(*iterator);
+}
+
+template<typename T>
+inline Stack<T>::Stack(const Stack& stack) {
+    copy(stack);
 }
 
 template<typename T>
@@ -64,7 +69,23 @@ inline bool Stack<T>::isEmpty() const {
 }
 
 template<typename T>
-inline Stack<T>::~Stack() {
+inline void Stack<T>::clear() {
     while (!isEmpty())
         pop();
+}
+
+template<typename T>
+inline Stack<T>& Stack<T>::operator=(const Stack& rightHandSideOperator) {
+    if (this == &rightHandSideOperator)
+        return *this;
+
+    clear();
+    copy(rightHandSideOperator);
+
+    return *this;
+}
+
+template<typename T>
+inline Stack<T>::~Stack() {
+    clear();
 }

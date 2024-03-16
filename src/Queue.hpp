@@ -15,6 +15,8 @@ class Queue {
     Node<T>* head{};
     Node<T>* tail{};
 
+    void copy(const Queue& queue);
+
     public:
 
     Queue(std::initializer_list<T> list);
@@ -24,6 +26,8 @@ class Queue {
     void enqueue(const T& element);
     T dequeue();
     bool isEmpty() const;
+    void clear();
+    Queue& operator=(const Queue& rightHandSideOperator);
     ~Queue();
 };
 

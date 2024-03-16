@@ -1,6 +1,16 @@
 #include "Queue.hpp"
 #include <iostream>
 
+template<typename T>
+inline void Queue<T>::copy(const Queue& queue) {
+    const Node<T>* iterator{ queue.head };
+
+    while (iterator != nullptr) {
+        enqueue(iterator->element);
+        iterator = iterator->nextNode;
+    }
+}
+
 template <typename T>
 inline Queue<T>::Queue(std::initializer_list<T> list) {
     for (const T& element : list)
@@ -9,12 +19,7 @@ inline Queue<T>::Queue(std::initializer_list<T> list) {
 
 template<typename T>
 inline Queue<T>::Queue(const Queue& queue) {
-    const Node<T>* iterator{ queue.head };
-
-    while (iterator != nullptr) {
-        enqueue(iterator->element);
-        iterator = iterator->nextNode;
-    }
+    copy(queue);
 }
 
 template<typename T>
@@ -66,7 +71,23 @@ inline bool Queue<T>::isEmpty() const {
 }
 
 template<typename T>
-inline Queue<T>::~Queue() {
+inline void Queue<T>::clear() {
     while (!isEmpty())
         dequeue();
+}
+
+template<typename T>
+inline Queue<T>& Queue<T>::operator=(const Queue& rightHandSideOperator) {
+    if (this == &rightHandSideOperator)
+        return *this;
+
+    clear();
+    copy(rightHandSideOperator);
+
+    return *this;
+}
+
+template<typename T>
+inline Queue<T>::~Queue() {
+    clear();
 }
