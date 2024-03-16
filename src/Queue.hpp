@@ -19,6 +19,7 @@ class Queue {
 
     public:
 
+    Queue() = default;
     Queue(std::initializer_list<T> list);
     Queue(const Queue& queue);
     int getLength();

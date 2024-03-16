@@ -17,6 +17,7 @@ class Stack {
 
     public:
 
+    Stack() = default;
     Stack(std::initializer_list<T> list);
     Stack(const Stack& stack);
     int getLength() const;
