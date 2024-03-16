@@ -86,6 +86,33 @@ inline Stack<T>& Stack<T>::operator=(const Stack& rightHandSideOperator) {
 }
 
 template<typename T>
+inline bool operator==(const Stack<T>& leftHandSideOperator, const Stack<T>& rightHandSideOperator) {
+    if (&leftHandSideOperator == &rightHandSideOperator)
+        return true;
+
+    if (leftHandSideOperator.length != rightHandSideOperator.length)
+        return false;
+
+    Node<T>* iteratorLeftOperator{ leftHandSideOperator.top };
+    Node<T>* iteratorRightOperator{ rightHandSideOperator.top };
+
+    while (iteratorLeftOperator != nullptr) {
+        if (iteratorLeftOperator->element != iteratorRightOperator->element)
+            return false;
+
+        iteratorLeftOperator = iteratorLeftOperator->previousNode;
+        iteratorRightOperator = iteratorRightOperator->previousNode;
+    }
+
+    return true;
+}
+
+template<typename T>
+inline bool operator!=(const Stack<T>& leftHandSideOperator, const Stack<T>& rightHandSideOperator) {
+    return !(leftHandSideOperator == rightHandSideOperator);
+}
+
+template<typename T>
 inline Stack<T>::~Stack() {
     clear();
 }

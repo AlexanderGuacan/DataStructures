@@ -26,6 +26,10 @@ class Stack {
     bool isEmpty() const;
     void clear();
     Stack& operator=(const Stack& rightHandSideOperator);
+    template <typename _T>
+    friend bool operator==(const Stack<_T>& leftHandSideOperator, const Stack<_T>& rightHandSideOperator);
+    template <typename _T>
+    friend bool operator!=(const Stack<_T>& leftHandSideOperator, const Stack<_T>& rightHandSideOperator);
     ~Stack();
 };
 

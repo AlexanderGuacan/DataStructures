@@ -28,6 +28,10 @@ class Queue {
     bool isEmpty() const;
     void clear();
     Queue& operator=(const Queue& rightHandSideOperator);
+    template <typename _T>
+    friend bool operator==(const Queue<_T>& leftHandSideOperator, const Queue<_T>& rightHandSideOperator);
+    template <typename _T>
+    friend bool operator!=(const Queue<_T>& leftHandSideOperator, const Queue<_T>& rightHandSideOperator);
     ~Queue();
 };
 
