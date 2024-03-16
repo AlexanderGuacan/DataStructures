@@ -1,7 +1,7 @@
 #include "Node.hpp"
 
 template <typename T>
-inline Node<T>::Node(const T& initialData): data{ initialData } {
+inline Node<T>::Node(const T& initialElement): element{ initialElement } {
 }
 
 template <typename T>

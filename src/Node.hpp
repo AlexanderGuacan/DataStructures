@@ -7,9 +7,9 @@ template <typename T>
 struct Node {
     Node* previousNode{};
     Node* nextNode{};
-    T data{};
+    T element{};
     
-    Node(const T& initialData);
+    Node(const T& initialElement);
     ~Node();
 };
 

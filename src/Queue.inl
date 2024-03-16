@@ -9,10 +9,10 @@ inline Queue<T>::Queue(std::initializer_list<T> list) {
 
 template<typename T>
 inline Queue<T>::Queue(const Queue& queue) {
-    const Node<T>* iterator{ queue.front };
+    const Node<T>* iterator{ queue.head };
 
     while (iterator != nullptr) {
-        enqueue(iterator->data);
+        enqueue(iterator->element);
         iterator = iterator->nextNode;
     }
 }
@@ -23,21 +23,20 @@ inline int Queue<T>::getLength() {
 }
 
 template<typename T>
-inline const T& Queue<T>::getFront() const {
-    return front;
+inline const T& Queue<T>::getHead() const {
+    return head->element;
 }
 
 template<typename T>
 inline void Queue<T>::enqueue(const T& element) {
     Node<T>* node{ new Node{ element } };
 
-    if (isEmpty()) {
-        front = node;
-    } else {
-        back->nextNode = node;
-    }
+    if (isEmpty())
+        head = node;
+    else
+        tail->nextNode = node;
 
-    back = node;
+    tail = node;
     ++length;
 }
 
@@ -46,20 +45,19 @@ inline T Queue<T>::dequeue() {
     if (isEmpty())
         throw "Empty collection exception";
 
-    T dequeueElement = front->data;
-    Node<T>* dequeueNode = front;
+    T elementDequeued = head->element;
+    Node<T>* nodeDequeued = head;
 
-    front = front->nextNode;
-
-    delete dequeueNode;
-    dequeueNode = nullptr;
-
+    head = head->nextNode;
     --length;
 
-    if (isEmpty())
-        back = nullptr;
+    delete nodeDequeued;
+    nodeDequeued = nullptr;
 
-    return dequeueElement;
+    if (isEmpty())
+        tail = nullptr;
+
+    return elementDequeued;
 }
 
 template<typename T>

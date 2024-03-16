@@ -12,15 +12,15 @@ class Queue {
     private:
 
     int length{};
-    Node<T>* front{};
-    Node<T>* back{};
+    Node<T>* head{};
+    Node<T>* tail{};
 
     public:
 
     Queue(std::initializer_list<T> list);
     Queue(const Queue& queue);
     int getLength();
-    const T& getFront() const;
+    const T& getHead() const;
     void enqueue(const T& element);
     T dequeue();
     bool isEmpty() const;
