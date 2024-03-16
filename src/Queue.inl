@@ -95,15 +95,15 @@ inline bool operator==(const Queue<T>& leftHandSideOperator, const Queue<T>& rig
     if (leftHandSideOperator.length != rightHandSideOperator.length)
         return false;
 
-    Node<T>* iteratorLeftOperator{ leftHandSideOperator.top };
-    Node<T>* iteratorRightOperator{ rightHandSideOperator.top };
+    Node<T>* iteratorLeftOperator{ leftHandSideOperator.head };
+    Node<T>* iteratorRightOperator{ rightHandSideOperator.head };
 
     while (iteratorLeftOperator != nullptr) {
         if (iteratorLeftOperator->element != iteratorRightOperator->element)
             return false;
 
-        iteratorLeftOperator = iteratorLeftOperator->previousNode;
-        iteratorRightOperator = iteratorRightOperator->previousNode;
+        iteratorLeftOperator = iteratorLeftOperator->nextNode;
+        iteratorRightOperator = iteratorRightOperator->nextNode;
     }
 
     return true;
