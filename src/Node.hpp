@@ -4,13 +4,18 @@
 #define NODE_HPP
 
 template <typename T>
-struct Node {
-    Node* previousNode{};
-    Node* nextNode{};
-    T element{};
+class Node {
+    public:
     
+    Node* previous{};
+    Node* next{};
+    T element{};
+
     Node(const T& element);
-    void interconnectWith(Node<T>* next);
+    void connectPrevious(Node<T>* node);
+    void connectNext(Node<T>* node);
+    void interconnectPrevious(Node<T>* node);
+    void interconnectNext(Node<T>* node);
     ~Node();
 };
 

@@ -4,16 +4,32 @@ template <typename T>
 inline Node<T>::Node(const T& element): element{ element } {}
 
 template<typename T>
-inline void Node<T>::interconnectWith(Node<T>* next) {
-    nextNode = next;
-    next->previousNode = this;
+inline void Node<T>::connectPrevious(Node<T>* node) {
+    previous = node;
+}
+
+template<typename T>
+inline void Node<T>::connectNext(Node<T>* node) {
+    next = node;
+}
+
+template<typename T>
+inline void Node<T>::interconnectPrevious(Node<T>* node) {
+    previous = node;
+    node->next = this;
+}
+
+template<typename T>
+inline void Node<T>::interconnectNext(Node<T>* node) {
+    next = node;
+    node->previous = this;
 }
 
 template <typename T>
 inline Node<T>::~Node() {
-    if (previousNode != nullptr)
-        previousNode = nullptr;
+    if (previous != nullptr)
+        previous = nullptr;
 
-    if (nextNode != nullptr)
-        nextNode = nullptr;
+    if (next != nullptr)
+        next = nullptr;
 }
