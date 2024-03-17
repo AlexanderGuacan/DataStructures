@@ -9,7 +9,8 @@ struct Node {
     Node* nextNode{};
     T element{};
     
-    Node(const T& initialElement);
+    Node(const T& element);
+    void interconnectWith(Node<T>* next);
     ~Node();
 };
 

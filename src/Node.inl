@@ -1,7 +1,13 @@
 #include "Node.hpp"
 
 template <typename T>
-inline Node<T>::Node(const T& initialElement): element{ initialElement } {}
+inline Node<T>::Node(const T& element): element{ element } {}
+
+template<typename T>
+inline void Node<T>::interconnectWith(Node<T>* next) {
+    nextNode = next;
+    next->previousNode = this;
+}
 
 template <typename T>
 inline Node<T>::~Node() {
