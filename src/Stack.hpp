@@ -12,6 +12,7 @@ class Stack {
 
     int length{};
     Node<T>* top{};
+    Node<T>* bottom{};
 
     void copy(const Stack& stack);
 
