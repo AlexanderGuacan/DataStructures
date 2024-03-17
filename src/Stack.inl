@@ -16,8 +16,8 @@ inline void Stack<T>::copy(const Stack& stack) {
 
 template<typename T>
 inline Stack<T>::Stack(std::initializer_list<T> list) {
-    for (auto iterator{ list.end() - 1 }; iterator != list.begin() - 1; --iterator)
-        push(*iterator);
+    for (const auto& element : list)
+        push(element);
 }
 
 template<typename T>
