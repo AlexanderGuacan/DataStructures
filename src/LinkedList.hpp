@@ -37,7 +37,7 @@ class LinkedList {
     T removeFirst();
     T removeLast();
     T removeFrom(int index);
-    void forEach(std::function<void(T& element)> modify);
+    void forEach(std::function<void(const T& element)> callback) const;
     LinkedList map(std::function<T(const T& element)> process) const;
     LinkedList filter(std::function<bool(const T& element)> isFilteredMatch) const;
     Iterator<T> begin() const;

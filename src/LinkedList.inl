@@ -178,9 +178,9 @@ inline T LinkedList<T>::removeFrom(int index) {
 }
 
 template<typename T>
-inline void LinkedList<T>::forEach(std::function<void(T& element)> modify) {
+inline void LinkedList<T>::forEach(std::function<void(const T& element)> callback) const {
     for (T& element : *this)
-        modify(element);
+        callback(element);
 }
 
 template<typename T>
