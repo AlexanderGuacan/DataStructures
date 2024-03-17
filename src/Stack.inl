@@ -7,7 +7,7 @@ inline void Stack<T>::copy(const Stack& stack) {
 
     while (iterator != nullptr) {
         reverseList.push(iterator->element);
-        iterator = iterator->previousNode;
+        iterator = iterator->previous;
     }
 
     while (!reverseList.isEmpty())
@@ -40,7 +40,7 @@ inline void Stack<T>::push(const T& element) {
     Node<T>* newNode{ new Node{ element } };
 
     if (!isEmpty())
-        newNode->previousNode = top;
+        newNode->connectPrevious(top);
 
     top = newNode;
     ++length;
@@ -54,7 +54,7 @@ inline T Stack<T>::pop() {
     T elementPopped = top->element;
     Node<T>* nodePopped = top;
 
-    top = top->previousNode;
+    top = top->previous;
     --length;
 
     delete nodePopped;
@@ -100,8 +100,8 @@ inline bool operator==(const Stack<T>& leftHandSideOperator, const Stack<T>& rig
         if (iteratorLeftOperator->element != iteratorRightOperator->element)
             return false;
 
-        iteratorLeftOperator = iteratorLeftOperator->previousNode;
-        iteratorRightOperator = iteratorRightOperator->previousNode;
+        iteratorLeftOperator = iteratorLeftOperator->previous;
+        iteratorRightOperator = iteratorRightOperator->previous;
     }
 
     return true;

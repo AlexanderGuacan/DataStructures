@@ -3,13 +3,13 @@
 template<typename T>
 inline void Iterator<T>::scrollCursorForward(int positions) {
     for (int i{}; i < positions; ++i)
-        cursor = cursor->nextNode;
+        cursor = cursor->next;
 }
 
 template<typename T>
 inline void Iterator<T>::scrollCursorBackward(int positions) {
     for (int i{}; i < positions; ++i)
-        cursor = cursor->previousNode;
+        cursor = cursor->previous;
 }
 
 template<typename T>

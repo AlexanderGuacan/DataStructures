@@ -7,7 +7,7 @@ inline void Queue<T>::copy(const Queue& queue) {
 
     while (iterator != nullptr) {
         enqueue(iterator->element);
-        iterator = iterator->nextNode;
+        iterator = iterator->next;
     }
 }
 
@@ -39,7 +39,7 @@ inline void Queue<T>::enqueue(const T& element) {
     if (isEmpty())
         head = newNode;
     else
-        tail->nextNode = newNode;
+        tail->connectNext(newNode);
 
     tail = newNode;
     ++length;
@@ -53,7 +53,7 @@ inline T Queue<T>::dequeue() {
     T elementDequeued = head->element;
     Node<T>* nodeDequeued = head;
 
-    head = head->nextNode;
+    head = head->next;
     --length;
 
     delete nodeDequeued;
@@ -102,8 +102,8 @@ inline bool operator==(const Queue<T>& leftHandSideOperator, const Queue<T>& rig
         if (iteratorLeftOperator->element != iteratorRightOperator->element)
             return false;
 
-        iteratorLeftOperator = iteratorLeftOperator->nextNode;
-        iteratorRightOperator = iteratorRightOperator->nextNode;
+        iteratorLeftOperator = iteratorLeftOperator->next;
+        iteratorRightOperator = iteratorRightOperator->next;
     }
 
     return true;

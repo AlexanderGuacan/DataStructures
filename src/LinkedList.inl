@@ -17,7 +17,7 @@ inline Node<T>* LinkedList<T>::getNode(int index) {
     Node<T>* iterator{ head };
 
     for (int i{}; i < index; ++i)
-        iterator = iterator->nextNode;
+        iterator = iterator->next;
 
     return iterator;
 }
@@ -60,13 +60,13 @@ inline void LinkedList<T>::addAtBegin(const T& element) {
 
     if (isEmpty()) {
         initializeLimits(element);
-        newNode->interconnectWith(bottomLimit);
+        bottomLimit->interconnectPrevious(newNode);
         tail = newNode;
     } else {
-        newNode->interconnectWith(head);
+        head->interconnectPrevious(newNode);
     }
 
-    topLimit->interconnectWith(newNode);
+    topLimit->interconnectNext(newNode);
     head = newNode;
     ++length;
 }
@@ -77,13 +77,13 @@ inline void LinkedList<T>::addAtEnd(const T& element) {
 
     if (isEmpty()) {
         initializeLimits(element);
-        topLimit->interconnectWith(newNode);
+        topLimit->interconnectNext(newNode);
         head = newNode;
     } else {
-        tail->interconnectWith(newNode);
+        tail->interconnectNext(newNode);
     }
 
-    newNode->interconnectWith(bottomLimit);
+    bottomLimit->interconnectPrevious(newNode);
     tail = newNode;
     ++length;
 }
@@ -100,11 +100,11 @@ inline void LinkedList<T>::addIn(const T& element, int index) {
         return addAtEnd(element);
 
     Node<T>* nextToNewNode{ getNode(index) };
-    Node<T>* previousToNewNode{ nextToNewNode->previousNode };
+    Node<T>* previousToNewNode{ nextToNewNode->previous };
     Node<T>* newNode{ new Node{ element } };
 
-    newNode->interconnectWith(nextToNewNode);
-    previousToNewNode->interconnectWith(newNode);
+    newNode->interconnectNext(nextToNewNode);
+    newNode->interconnectPrevious(previousToNewNode);
 
     ++length;
 }
@@ -117,8 +117,8 @@ inline T LinkedList<T>::removeFirst() {
     T elementRemoved{ head->element };
     Node<T>* nodeRemoved{ head };
 
-    head = head->nextNode;
-    topLimit->interconnectWith(head);
+    head = head->next;
+    topLimit->interconnectNext(head);
     --length;
 
     delete nodeRemoved;
@@ -138,8 +138,8 @@ inline T LinkedList<T>::removeLast() {
     T elementRemoved{ tail->element };
     Node<T>* nodeRemoved{ tail };
 
-    tail = tail->previousNode;
-    tail->interconnectWith(bottomLimit);
+    tail = tail->previous;
+    bottomLimit->interconnectPrevious(tail);
     --length;
 
     delete nodeRemoved;
@@ -163,12 +163,13 @@ inline T LinkedList<T>::removeFrom(int index) {
         return removeLast();
 
     Node<T>* nodeRemoved{ getNode(index) };
-    Node<T>* previousToNodeRemoved{ nodeRemoved->previousNode };
-    Node<T>* nextToNodeRemoved{ nodeRemoved->nextNode };
-    T elementRemoved{ nodeRemoved->element };
+    Node<T>* previousToNodeRemoved{ nodeRemoved->previous };
+    Node<T>* nextToNodeRemoved{ nodeRemoved->next };
 
-    previousToNodeRemoved->interconnectWith(nextToNodeRemoved);
+    previousToNodeRemoved->interconnectNext(nextToNodeRemoved);
     --length;
+
+    T elementRemoved{ nodeRemoved->element };
 
     delete nodeRemoved;
     nodeRemoved = nullptr;
@@ -211,7 +212,7 @@ inline Iterator<T> LinkedList<T>::begin() const {
 
 template<typename T>
 inline Iterator<T> LinkedList<T>::end() const {
-    return Iterator<T>{ tail->nextNode };
+    return Iterator<T>{ tail->next };
 }
 
 template<typename T>
