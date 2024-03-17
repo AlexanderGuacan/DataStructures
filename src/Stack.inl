@@ -37,12 +37,12 @@ inline const T& Stack<T>::getTop() const {
 
 template<typename T>
 inline void Stack<T>::push(const T& element) {
-    Node<T>* node{ new Node{ element } };
+    Node<T>* newNode{ new Node{ element } };
 
     if (!isEmpty())
-        node->previousNode = top;
+        newNode->previousNode = top;
 
-    top = node;
+    top = newNode;
     ++length;
 }
 

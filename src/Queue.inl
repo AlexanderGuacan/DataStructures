@@ -34,14 +34,14 @@ inline const T& Queue<T>::getHead() const {
 
 template<typename T>
 inline void Queue<T>::enqueue(const T& element) {
-    Node<T>* node{ new Node{ element } };
+    Node<T>* newNode{ new Node{ element } };
 
     if (isEmpty())
-        head = node;
+        head = newNode;
     else
-        tail->nextNode = node;
+        tail->nextNode = newNode;
 
-    tail = node;
+    tail = newNode;
     ++length;
 }
 
