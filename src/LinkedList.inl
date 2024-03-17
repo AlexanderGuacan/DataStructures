@@ -177,6 +177,34 @@ inline T LinkedList<T>::removeFrom(int index) {
 }
 
 template<typename T>
+inline void LinkedList<T>::forEach(std::function<void(T& element)> modify) {
+    for (T& element : *this)
+        modify(element);
+}
+
+template<typename T>
+inline LinkedList<T> LinkedList<T>::map(std::function<T(const T& element)> process) const {
+    LinkedList<T> mappedList{};
+
+    for (const T& element : *this)
+        mappedList.addAtEnd(process(element));
+
+    return mappedList;
+}
+
+template<typename T>
+inline LinkedList<T> LinkedList<T>::filter(std::function<bool(const T& element)> isFilteredMatch) const {
+    LinkedList<T> filterList{};
+
+    for (const T& element : *this) {
+        if (isFilteredMatch(element))
+            filterList.addAtEnd(element);
+    }
+
+    return filterList;
+}
+
+template<typename T>
 inline Iterator<T> LinkedList<T>::begin() const {
     return Iterator<T>{ head };
 }

@@ -6,6 +6,7 @@
 #include "Node.hpp"
 #include "Iterator.hpp"
 #include <initializer_list>
+#include <functional>
 
 template <typename T>
 class LinkedList {
@@ -36,6 +37,9 @@ class LinkedList {
     T removeFirst();
     T removeLast();
     T removeFrom(int index);
+    void forEach(std::function<void(T& element)> modify);
+    LinkedList map(std::function<T(const T& element)> process) const;
+    LinkedList filter(std::function<bool(const T& element)> isFilteredMatch) const;
     Iterator<T> begin() const;
     Iterator<T> end() const;
     T& operator[](int index);
