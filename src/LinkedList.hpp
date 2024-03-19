@@ -33,10 +33,10 @@ class LinkedList {
     void clear();
     void addAtBegin(const T& element);
     void addAtEnd(const T& element);
-    void addIn(const T& element, int index);
+    void addToIndex(const T& element, int index);
     T removeFirst();
     T removeLast();
-    T removeFrom(int index);
+    T removeAtIndex(int index);
     void forEach(std::function<void(const T& element)> callback) const;
     LinkedList map(std::function<T(const T& element)> process) const;
     LinkedList filter(std::function<bool(const T& element)> isFilteredMatch) const;

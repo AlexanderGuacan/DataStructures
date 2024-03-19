@@ -89,7 +89,7 @@ inline void LinkedList<T>::addAtEnd(const T& element) {
 }
 
 template<typename T>
-inline void LinkedList<T>::addIn(const T& element, int index) {
+inline void LinkedList<T>::addToIndex(const T& element, int index) {
     if (isOutOfBounded(index))
         throw "Index out of bounded exception";
 
@@ -152,7 +152,7 @@ inline T LinkedList<T>::removeLast() {
 }
 
 template<typename T>
-inline T LinkedList<T>::removeFrom(int index) {
+inline T LinkedList<T>::removeAtIndex(int index) {
     if (isOutOfBounded(index))
         throw "Index out of bounded exception";
 
