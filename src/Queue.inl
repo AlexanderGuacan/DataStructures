@@ -50,12 +50,13 @@ inline T Queue<T>::dequeue() {
     if (isEmpty())
         throw "Empty collection exception";
 
-    T elementDequeued = head->element;
     Node<T>* nodeDequeued = head;
 
     head = head->next;
     --length;
 
+    T elementDequeued{ nodeDequeued->element };
+    
     delete nodeDequeued;
     nodeDequeued = nullptr;
 

@@ -114,12 +114,13 @@ inline T LinkedList<T>::removeFirst() {
     if (isEmpty())
         throw "Empty list exception";
 
-    T elementRemoved{ head->element };
     Node<T>* nodeRemoved{ head };
 
     head = head->next;
     topLimit->interconnectNext(head);
     --length;
+
+    T elementRemoved{ nodeRemoved->element };
 
     delete nodeRemoved;
     nodeRemoved = nullptr;
@@ -135,12 +136,13 @@ inline T LinkedList<T>::removeLast() {
     if (isEmpty())
         throw "Empty list exception";
 
-    T elementRemoved{ tail->element };
     Node<T>* nodeRemoved{ tail };
 
     tail = tail->previous;
     bottomLimit->interconnectPrevious(tail);
     --length;
+
+    T elementRemoved{ nodeRemoved->element };
 
     delete nodeRemoved;
     nodeRemoved = nullptr;

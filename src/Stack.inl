@@ -49,11 +49,12 @@ inline T Stack<T>::pop() {
     if (isEmpty())
         throw "Empty collection exception";
 
-    T elementPopped = top->element;
     Node<T>* nodePopped = top;
 
     top = top->next;
     --length;
+
+    T elementPopped{ nodePopped->element };
 
     delete nodePopped;
     nodePopped = nullptr;
