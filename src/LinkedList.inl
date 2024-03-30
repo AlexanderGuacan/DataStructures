@@ -181,7 +181,7 @@ inline T LinkedList<T>::removeAtIndex(int index) {
 
 template<typename T>
 inline void LinkedList<T>::forEach(std::function<void(const T& element)> callback) const {
-    for (T& element : *this)
+    for (const T& element : *this)
         callback(element);
 }
 
@@ -197,14 +197,14 @@ inline LinkedList<T> LinkedList<T>::map(std::function<T(const T& element)> proce
 
 template<typename T>
 inline LinkedList<T> LinkedList<T>::filter(std::function<bool(const T& element)> isFilteredMatch) const {
-    LinkedList<T> filterList{};
+    LinkedList<T> filteredList{};
 
     for (const T& element : *this) {
         if (isFilteredMatch(element))
-            filterList.addAtEnd(element);
+            filteredList.addAtEnd(element);
     }
 
-    return filterList;
+    return filteredList;
 }
 
 template<typename T>
