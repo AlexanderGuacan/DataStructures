@@ -48,6 +48,8 @@ class LinkedList {
     friend bool operator==(const LinkedList<_T>& leftHandSideOperator, const LinkedList<_T>& rightHandSideOperator);
     template <typename _T>
     friend bool operator!=(const LinkedList<_T>& leftHandSideOperator, const LinkedList<_T>& rightHandSideOperator);
+    template <typename _T>
+    friend LinkedList<_T> operator+(const LinkedList<_T>& leftHandSideOperator, const LinkedList<_T>& rightHandSideOperator);
     ~LinkedList();
 };
 

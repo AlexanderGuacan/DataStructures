@@ -256,6 +256,13 @@ inline bool operator!=(const LinkedList<T>& leftHandSideOperator, const LinkedLi
 }
 
 template<typename T>
+inline LinkedList<T> operator+(const LinkedList<T>& leftHandSideOperator, const LinkedList<T>& rightHandSideOperator) {
+    LinkedList<T> result{ leftHandSideOperator };
+    result.copy(rightHandSideOperator);
+    return result;
+}
+
+template<typename T>
 inline LinkedList<T>::~LinkedList() {
     clear();
 }
