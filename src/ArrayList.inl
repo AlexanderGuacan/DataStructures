@@ -1,25 +1,21 @@
 #include "ArrayList.hpp"
 
 template <typename T>
-void ArrayList<T>::copy(const ArrayList& list) {
-    for (const T& element : list)
+void ArrayList<T>::copy(const List<T>& list) {
+    const ArrayList<T>* arrayList{ dynamic_cast<const ArrayList<T>*>(&list) };
+    for (const T& element : *arrayList)
         addAtEnd(element);
-}
-
-template <typename T>
-bool ArrayList<T>::isOutOfBounded(int index) {
-    return index < 0 || index >= length;
 }
 
 template<typename T>
 inline bool ArrayList<T>::isFull() {
-    return length >= capacity;
+    return List<T>::length >= capacity;
 }
 
 template<typename T>
 inline bool ArrayList<T>::hasUnusedIncrease() {
-    constexpr int extraIncrease = increase + increase;
-    return capacity - length == extraIncrease;
+    const int extraIncrease = increase + increase;
+    return capacity - List<T>::length == extraIncrease;
 }
 
 template<typename T>
@@ -38,7 +34,7 @@ template<typename T>
 inline void ArrayList<T>::resizeArray() {
     T* resizedArray{ new T[capacity]{} };
 
-    for (int i{}; i < length; ++i)
+    for (int i{}; i < List<T>::length; ++i)
         resizedArray[i] = array[i];
 
     delete[] array;
@@ -64,11 +60,6 @@ inline ArrayList<T>::ArrayList(const ArrayList& list): ArrayList(list.capacity, 
 }
 
 template<typename T>
-inline int ArrayList<T>::getLength() const {
-    return length;
-}
-
-template<typename T>
 inline int ArrayList<T>::getCapacity() const {
     return capacity;
 }
@@ -79,14 +70,9 @@ inline void ArrayList<T>::setIncrease(int newIncrease) {
 }
 
 template<typename T>
-inline bool ArrayList<T>::isEmpty() const {
-    return !length;
-}
-
-template<typename T>
 inline void ArrayList<T>::clear() {
     capacity = defaultCapacity;
-    length = 0;
+    List<T>::length = 0;
 
     delete[] array;
     array = new T[capacity]{};
@@ -94,14 +80,14 @@ inline void ArrayList<T>::clear() {
 
 template<typename T>
 inline void ArrayList<T>::addAtBegin(const T& element) {
-    for (int currentPosition = length; currentPosition > 0; --currentPosition) {
+    for (int currentPosition = List<T>::length; currentPosition > 0; --currentPosition) {
         int leftSidePosition = currentPosition - 1;
         array[currentPosition] = array[leftSidePosition];
     }
 
     int begin{};
     array[begin] = element;
-    ++length;
+    ++List<T>::length;
 
     if (isFull())
         increaseArrayCapacity();
@@ -109,8 +95,8 @@ inline void ArrayList<T>::addAtBegin(const T& element) {
 
 template<typename T>
 inline void ArrayList<T>::addAtEnd(const T& element) {
-    array[length] = element;
-    ++length;
+    array[List<T>::length] = element;
+    ++List<T>::length;
 
     if (isFull())
         increaseArrayCapacity();
@@ -118,16 +104,16 @@ inline void ArrayList<T>::addAtEnd(const T& element) {
 
 template<typename T>
 inline void ArrayList<T>::addToIndex(const T& element, int index) {
-    if (isOutOfBounded(index))
+    if (List<T>::isOutOfBounded(index))
         throw "Index out of bounded exception";
 
-    for (int currentPosition = length; currentPosition > index; --currentPosition) {
+    for (int currentPosition = List<T>::length; currentPosition > index; --currentPosition) {
         int leftSidePosition = currentPosition - 1;
         array[currentPosition] = array[leftSidePosition];
     }
 
     array[index] = element;
-    ++length;
+    ++List<T>::length;
 
     if (isFull())
         increaseArrayCapacity();
@@ -135,17 +121,17 @@ inline void ArrayList<T>::addToIndex(const T& element, int index) {
 
 template<typename T>
 inline T ArrayList<T>::removeFirst() {
-    if (isEmpty())
+    if (List<T>::isEmpty())
         throw "Empty list exception";
 
     T elementRemoved{ array[0] };
 
-    for (int currentPosition{}; currentPosition < length; ++currentPosition) {
+    for (int currentPosition{}; currentPosition < List<T>::length; ++currentPosition) {
         int rightSidePosition = currentPosition + 1;
         array[currentPosition] = array[rightSidePosition];
     }
 
-    --length;
+    --List<T>::length;
 
     if (hasUnusedIncrease())
         decreaseArrayCapacity();
@@ -155,11 +141,11 @@ inline T ArrayList<T>::removeFirst() {
 
 template<typename T>
 inline T ArrayList<T>::removeLast() {
-    if (isEmpty())
+    if (List<T>::isEmpty())
         throw "Empty list exception";
 
-    T elementRemoved{ array[length - 1] };
-    --length;
+    T elementRemoved{ array[List<T>::length - 1] };
+    --List<T>::length;
 
     if (hasUnusedIncrease())
         decreaseArrayCapacity();
@@ -171,12 +157,12 @@ template<typename T>
 inline T ArrayList<T>::removeAtIndex(int index) {
     T elementRemoved{ array[index] };
 
-    for (int currentPosition{ index }; currentPosition < length; ++currentPosition) {
+    for (int currentPosition{ index }; currentPosition < List<T>::length; ++currentPosition) {
         int rightSidePosition = currentPosition + 1;
         array[currentPosition] = array[rightSidePosition];
     }
 
-    --length;
+    --List<T>::length;
 
     if (hasUnusedIncrease())
         decreaseArrayCapacity();
@@ -191,22 +177,22 @@ inline void ArrayList<T>::forEach(std::function<void(const T& element)> callback
 }
 
 template<typename T>
-inline ArrayList<T> ArrayList<T>::map(std::function<T(const T& element)> process) const {
-    ArrayList<T> mappedList{};
+inline ArrayList<T>* ArrayList<T>::map(std::function<T(const T& element)> process) const {
+    ArrayList<T>* mappedList{ new ArrayList<T>(capacity, increase) };
 
     for (const T& element : *this)
-        mappedList.addAtEnd(process(element));
+        mappedList->addAtEnd(process(element));
 
     return mappedList;
 }
 
 template<typename T>
-inline ArrayList<T> ArrayList<T>::filter(std::function<bool(const T& element)> isFilteredMatch) const {
-    ArrayList<T> filteredList{};
+inline ArrayList<T>* ArrayList<T>::filter(std::function<bool(const T& element)> isFilteredMatch) const {
+    ArrayList<T>* filteredList{ new ArrayList<T>(capacity, increase) };
 
     for (const T& element : *this) {
         if (isFilteredMatch(element))
-            filteredList.addAtEnd(element);
+            filteredList->addAtEnd(element);
     }
 
     return filteredList;
@@ -219,7 +205,7 @@ inline T* ArrayList<T>::begin() const {
 
 template<typename T>
 inline T* ArrayList<T>::end() const {
-    return array + length;
+    return array + List<T>::length;
 }
 
 template<typename T>
@@ -228,12 +214,14 @@ inline T& ArrayList<T>::operator[](int index) {
 }
 
 template<typename T>
-inline ArrayList<T>& ArrayList<T>::operator=(const ArrayList& rightHandSideOperator) {
-    if (&rightHandSideOperator == this)
+inline ArrayList<T>& ArrayList<T>::operator=(const List<T>& rightHandSideOperator) {
+    const ArrayList<T>* castedOperator{ dynamic_cast<const ArrayList<T>*>(&rightHandSideOperator) };
+
+    if (castedOperator == this)
         return *this;
 
-    defaultCapacity = rightHandSideOperator.defaultCapacity;
-    increase = rightHandSideOperator.increase;
+    defaultCapacity = castedOperator->defaultCapacity;
+    increase = castedOperator->increase;
     clear();
     copy(rightHandSideOperator);
 
@@ -245,10 +233,10 @@ inline bool operator==(const ArrayList<T>& leftHandSideOperator, const ArrayList
     if (&leftHandSideOperator == &rightHandSideOperator)
         return true;
 
-    if (leftHandSideOperator.length != rightHandSideOperator.length)
+    if (leftHandSideOperator.List<T>::length != rightHandSideOperator.List<T>::length)
         return false;
 
-    for (int i{}; i < leftHandSideOperator.length; ++i) {
+    for (int i{}; i < leftHandSideOperator.List<T>::length; ++i) {
         if (leftHandSideOperator[i] != rightHandSideOperator[i])
             return false;
     }
