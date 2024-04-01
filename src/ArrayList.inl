@@ -121,9 +121,9 @@ inline void ArrayList<T>::addToIndex(const T& element, int index) {
     if (isOutOfBounded(index))
         throw "Index out of bounded exception";
 
-    for (int currentPosition = length - 1; currentPosition >= index; --currentPosition) {
-        int rightSidePosition = currentPosition + 1;
-        array[rightSidePosition] = array[currentPosition];
+    for (int currentPosition = length; currentPosition > index; --currentPosition) {
+        int leftSidePosition = currentPosition - 1;
+        array[currentPosition] = array[leftSidePosition];
     }
 
     array[index] = element;
