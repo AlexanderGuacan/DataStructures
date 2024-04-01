@@ -55,7 +55,7 @@ inline ArrayList<T>::ArrayList(std::initializer_list<T> list) : ArrayList(list.s
 }
 
 template<typename T>
-inline ArrayList<T>::ArrayList(const ArrayList& list): ArrayList(list.capacity, list.increase) {
+inline ArrayList<T>::ArrayList(const ArrayList<T>& list): ArrayList(list.capacity, list.increase) {
     copy(list);
 }
 
@@ -233,10 +233,10 @@ inline bool operator==(const ArrayList<T>& leftHandSideOperator, const ArrayList
     if (&leftHandSideOperator == &rightHandSideOperator)
         return true;
 
-    if (leftHandSideOperator.List<T>::length != rightHandSideOperator.List<T>::length)
+    if (leftHandSideOperator.length != rightHandSideOperator.length)
         return false;
 
-    for (int i{}; i < leftHandSideOperator.List<T>::length; ++i) {
+    for (int i{}; i < leftHandSideOperator.length; ++i) {
         if (leftHandSideOperator[i] != rightHandSideOperator[i])
             return false;
     }

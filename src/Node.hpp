@@ -7,8 +7,8 @@ template <typename T>
 class Node {
     public:
     
-    Node* previous{};
-    Node* next{};
+    Node<T>* previous{};
+    Node<T>* next{};
     T element{};
 
     Node(const T& element);

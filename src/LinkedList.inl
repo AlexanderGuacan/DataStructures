@@ -30,7 +30,7 @@ inline LinkedList<T>::LinkedList(std::initializer_list<T> list) {
 }
 
 template<typename T>
-inline LinkedList<T>::LinkedList(const LinkedList& list) {
+inline LinkedList<T>::LinkedList(const LinkedList<T>& list) {
     copy(list);
 }
 
@@ -43,7 +43,7 @@ inline void LinkedList<T>::clear() {
 
 template<typename T>
 inline void LinkedList<T>::addAtBegin(const T& element) {
-    Node<T>* newNode{ new Node{ element } };
+    Node<T>* newNode{ new Node<T>{ element } };
 
     if (List<T>::isEmpty()) {
         initializeLimits(element);
@@ -60,7 +60,7 @@ inline void LinkedList<T>::addAtBegin(const T& element) {
 
 template<typename T>
 inline void LinkedList<T>::addAtEnd(const T& element) {
-    Node<T>* newNode{ new Node{ element } };
+    Node<T>* newNode{ new Node<T>{ element } };
 
     if (List<T>::isEmpty()) {
         initializeLimits(element);
@@ -88,7 +88,7 @@ inline void LinkedList<T>::addToIndex(const T& element, int index) {
 
     Node<T>* nextToNewNode{ getNode(index) };
     Node<T>* previousToNewNode{ nextToNewNode->previous };
-    Node<T>* newNode{ new Node{ element } };
+    Node<T>* newNode{ new Node<T>{ element } };
 
     newNode->interconnectNext(nextToNewNode);
     newNode->interconnectPrevious(previousToNewNode);
@@ -228,7 +228,7 @@ inline bool operator==(const LinkedList<T>& leftHandSideOperator, const LinkedLi
     if (&leftHandSideOperator == &rightHandSideOperator)
         return true;
 
-    if (leftHandSideOperator.List<T>::length != rightHandSideOperator.List<T>::length)
+    if (leftHandSideOperator.length != rightHandSideOperator.length)
         return false;
 
     for (Iterator<T> i{ leftHandSideOperator.begin() }, j{ rightHandSideOperator.begin() }; i != leftHandSideOperator.end(); ++i, ++j) {
