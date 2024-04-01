@@ -41,6 +41,7 @@ class ArrayList : public List<T> {
     T* begin() const;
     T* end() const;
     T& operator[](int index) override;
+    const T& operator[](int index) const override;
     ArrayList<T>& operator=(const List<T>& rightHandSideOperator) override;
     template <typename _T>
     friend bool operator==(const ArrayList<_T>& leftHandSideOperator, const ArrayList<_T>& rightHandSideOperator);

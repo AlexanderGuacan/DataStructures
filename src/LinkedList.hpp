@@ -19,7 +19,7 @@ class LinkedList : public List<T> {
 
     void copy(const List<T>& list) override;
     void initializeLimits(const T& element);
-    Node<T>* getNode(int index);
+    Node<T>* getNode(int index) const;
 
     public:
 
@@ -39,6 +39,7 @@ class LinkedList : public List<T> {
     Iterator<T> begin() const;
     Iterator<T> end() const;
     T& operator[](int index) override;
+    const T& operator[](int index) const override;
     LinkedList<T>& operator=(const List<T>& rightHandSideOperator) override;
     template <typename _T>
     friend bool operator==(const LinkedList<_T>& leftHandSideOperator, const LinkedList<_T>& rightHandSideOperator);

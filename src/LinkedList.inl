@@ -14,7 +14,7 @@ inline void LinkedList<T>::initializeLimits(const T& element) {
 }
 
 template<typename T>
-inline Node<T>* LinkedList<T>::getNode(int index) {
+inline Node<T>* LinkedList<T>::getNode(int index) const {
     Node<T>* iterator{ head };
 
     for (int i{}; i < index; ++i)
@@ -206,6 +206,12 @@ inline Iterator<T> LinkedList<T>::end() const {
 
 template<typename T>
 inline T& LinkedList<T>::operator[](int index) {
+    Node<T>* nodeSelected{ getNode(index) };
+    return nodeSelected->element;
+}
+
+template<typename T>
+inline const T& LinkedList<T>::operator[](int index) const {
     Node<T>* nodeSelected{ getNode(index) };
     return nodeSelected->element;
 }

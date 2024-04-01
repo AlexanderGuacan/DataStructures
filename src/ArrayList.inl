@@ -214,6 +214,11 @@ inline T& ArrayList<T>::operator[](int index) {
 }
 
 template<typename T>
+inline const T& ArrayList<T>::operator[](int index) const {
+    return array[index];
+}
+
+template<typename T>
 inline ArrayList<T>& ArrayList<T>::operator=(const List<T>& rightHandSideOperator) {
     const ArrayList<T>* castedOperator{ dynamic_cast<const ArrayList<T>*>(&rightHandSideOperator) };
 
